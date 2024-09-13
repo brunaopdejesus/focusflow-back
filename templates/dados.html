@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados dos Sensores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 50px;
+        }
+        .dados-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            padding: 20px;
+            width: 80%;
+            margin: auto;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+    <script>
+        // Função para atualizar a tabela automaticamente
+        function atualizarTabela() {
+            fetch('/atualizar_tabela')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('tabela-dados').innerHTML = html;
+                })
+                .catch(error => console.log("Erro ao atualizar tabela:", error));
+        }
+
+        // Atualiza a tabela a cada 5 segundos
+        setInterval(atualizarTabela, 5000);
+    </script>
+</head>
+<body>
+    <div class="dados-container">
+        <h1>Dados dos Sensores</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Data e Hora</th>
+                    <th>Temperatura (°C)</th>
+                    <th>Umidade (%)</th>
+                    <th>Luminosidade (LDR)</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-dados">
+                {% for linha in dados_csv %}
+                    <tr>
+                        <td>{{ linha[0] }}</td>
+                        <td>{{ linha[1] }} °C</td>
+                        <td>{{ linha[2] }} %</td>
+                        <td>{{ linha[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

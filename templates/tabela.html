@@ -1,0 +1,8 @@
+{% for linha in dados_csv %}
+    <tr>
+        <td>{{ linha[0] }}</td>
+        <td>{{ linha[1] }} °C</td>
+        <td>{{ linha[2] }} %</td>
+        <td>{{ linha[3] }}</td>
+    </tr>
+{% endfor %}
